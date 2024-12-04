@@ -7,3 +7,5 @@
 
 * Erstellen von Prefabs
 * Erstellen eigener Gegenstände (Tisch Stühle)
+
+das ist lokal zum testen
