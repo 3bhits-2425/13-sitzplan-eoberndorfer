@@ -1,1 +1,9 @@
-# 13-sitzplan-eoberndorfer
+# 13-sitzplan-obee
+
+## Ziel: Nachstellung eines Sitzplans der 3BHITS
+
+
+## Learnings:
+
+* Erstellen von Prefabs
+* Erstellen eigener Gegenstände (Tisch Stühle)
