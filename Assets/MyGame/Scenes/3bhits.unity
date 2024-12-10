@@ -246,9 +246,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tableLayout: {fileID: 11400000, guid: c8735c7782368fd40ae943f8edd723cc, type: 2}
   students:
-  - {fileID: 11400000, guid: 6a657d281058c9c4e98357abf24b694c, type: 2}
-  - {fileID: 11400000, guid: 49388a874be09f74184756c0b9c9d835, type: 2}
-  - {fileID: 11400000, guid: c8ea1d6fd74abda4893b23fa3c08d4aa, type: 2}
+  - {fileID: 11400000, guid: 973b5cc30e9572f46b21e4776919595b, type: 2}
+  - {fileID: 11400000, guid: e46fbc6f1b01d644985c60cd593f49ea, type: 2}
+  - {fileID: 11400000, guid: 2ae7aa83bd511fa4fabfcfb9fe4f0394, type: 2}
   - {fileID: 11400000, guid: 7a8da36318f1e8442ac409438bc98e65, type: 2}
   - {fileID: 11400000, guid: a0980300dba406344aa0578affbd982f, type: 2}
   - {fileID: 11400000, guid: d4bd03b7e908eab4ab302b5a0e5f962c, type: 2}
@@ -276,7 +276,7 @@ Transform:
   m_GameObject: {fileID: 1258340134}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.4702797, y: -3.445987, z: -1.2127681}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

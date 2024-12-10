@@ -16,3 +16,5 @@ MonoBehaviour:
   eyecolor: {r: 0, g: 0, b: 1, a: 0}
   studentImage: {fileID: 21300000, guid: d23075609f121e3428c1f0b47bdb36d3, type: 3}
   studentClip: {fileID: 8300000, guid: e15f2f0348ab82d49b0793fa2f26ac35, type: 3}
+  studentPrefab: {fileID: 2174177686415399614, guid: e00885eed4721a044bdb85442ecf21be, type: 3}
+  albedoTexture: {fileID: 0}
