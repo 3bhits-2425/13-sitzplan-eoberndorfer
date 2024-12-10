@@ -267,6 +267,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f0aa4a66f1d46174eacf22cf2aac57c2, type: 2}
   tablePrefab: {fileID: 1243259935979854, guid: da536aa57b3c6824093ab141245a54ba, type: 3}
   chairPrefab: {fileID: 1576617969557092, guid: ebb2c3175a4c6d44b893dfc76330ddb0, type: 3}
+  humanPrefab: {fileID: 2174177686415399614, guid: e00885eed4721a044bdb85442ecf21be, type: 3}
 --- !u!4 &1258340136
 Transform:
   m_ObjectHideFlags: 0

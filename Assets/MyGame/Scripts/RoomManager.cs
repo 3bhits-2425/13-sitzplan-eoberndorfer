@@ -4,79 +4,108 @@ using UnityEngine;
 
 public class RoomManager : MonoBehaviour
 {
-    [SerializeField] private TableStudentData tableLayout; 
-    [SerializeField] private StudentData[] students; 
-    [SerializeField] private GameObject tablePrefab; 
-    [SerializeField] private GameObject chairPrefab; 
-    private int studentIndex = 0; 
-
+    [SerializeField] private TableStudentData tableLayout;
+    [SerializeField] private StudentData[] students; // Array von StudentData
+    [SerializeField] private GameObject tablePrefab;
+    [SerializeField] private GameObject chairPrefab;
+    [SerializeField] private GameObject humanPrefab; // Prefab für den Menschen
 
     private void Start()
     {
+        int studentIndex = 0; // Index, um die Studenten zu durchlaufen
+
+        // Durchlaufe alle Zeilen und Spalten, um die Tische zu platzieren
         for (int row = 0; row < tableLayout.rows; row++)
         {
             for (int col = 0; col < tableLayout.columns; col++)
             {
                 Vector3 tablePosition = new Vector3(col * tableLayout.tableSpacing, 0, row * tableLayout.tableSpacing);
 
-               
+                // Instanziiere den Tisch
                 GameObject table = Instantiate(tablePrefab, tablePosition, Quaternion.identity, transform);
 
-                
+                // Finde die Positionen für die Stühle
                 Transform pos1 = table.transform.Find("pos1");
                 Transform pos2 = table.transform.Find("pos2");
+
+                // Stuhl 1
                 if (pos1 != null)
                 {
-                    Instantiate(chairPrefab, pos1.position, pos1.rotation, table.transform);
+                    GameObject chair1 = Instantiate(chairPrefab, pos1.position, pos1.rotation, table.transform);
+                    // Wenn noch Studenten übrig sind, setze den ersten Schüler auf den Stuhl
+                    if (studentIndex < students.Length)
+                    {
+                        SpawnStudentOnChair(chair1, students[studentIndex]);
+                        studentIndex++;
+                    }
                 }
+
+                // Stuhl 2
                 if (pos2 != null)
                 {
-                    Instantiate(chairPrefab, pos2.position, pos2.rotation, table.transform);
-                }
-
-                
-                Transform posh1 = table.transform.Find("posh1");
-                Transform posh2 = table.transform.Find("posh2");
-
-                if (posh1 != null)
-                {
-                    PlaceStudent(posh1.position, posh1.rotation, table.transform);
-                }
-                if (posh2 != null)
-                {
-                    PlaceStudent(posh2.position, posh2.rotation, table.transform);
+                    GameObject chair2 = Instantiate(chairPrefab, pos2.position, pos2.rotation, table.transform);
+                    // Wenn noch Studenten übrig sind, setze den nächsten Schüler auf den Stuhl
+                    if (studentIndex < students.Length)
+                    {
+                        SpawnStudentOnChair(chair2, students[studentIndex]);
+                        studentIndex++;
+                    }
                 }
             }
         }
     }
 
-    private void PlaceStudent(Vector3 position, Quaternion rotation, Transform parent)
+    // Methode, um den Studenten auf den Stuhl zu setzen
+    private void SpawnStudentOnChair(GameObject chair, StudentData studentData)
     {
-        if (studentIndex < students.Length)
+        // Finde die HumanPosition im Stuhl (bzw. Kopf des Menschen-Prefabs)
+        Transform humanPosition = chair.transform.Find("HumanPosition");
+
+        if (humanPosition == null)
         {
-            GameObject studentPrefab = students[studentIndex].studentPrefab;
+            Debug.LogError($"HumanPosition nicht gefunden im Stuhl: {chair.name}");
+            return;
+        }
 
-            //Prüfen ob student prefab vorhanden ist
-            if (studentPrefab != null)
+        // Instanziiere den Menschen (Schüler)
+        GameObject human = Instantiate(humanPrefab, humanPosition.position, humanPosition.rotation, chair.transform);
+
+        // Setze den Namen des Schülers
+        human.name = studentData.studentName;
+
+        // Finde die Sphere, die den Kopf des Menschen darstellt
+        Transform headTransform = human.transform.Find("Head"); // Stelle sicher, dass "Head" der Name des Kopf-Teils im Prefab ist
+        if (headTransform != null)
+        {
+            // Setze das Material der Kopf-Sphere
+            Renderer headRenderer = headTransform.GetComponent<Renderer>();
+            if (headRenderer != null)
             {
-                // Studenten instanzieren
-                GameObject student = Instantiate(studentPrefab, position, rotation, parent);
-                student.name = students[studentIndex].studentName;
+                // Verwende das Sprite des Schülers als Textur
+                Texture2D studentTexture = studentData.albedoTexture; // Hier kannst du die Textur verwenden, falls du keine Sprite hast
 
-                // Renderer suchen 
-                Renderer renderer = student.GetComponentInChildren<Renderer>();
-                if (renderer != null)
+                if (studentTexture != null)
                 {
-                    // Neues Material erstellen und Albedo-Textur setzen
-                    Material newMaterial = new Material(renderer.material);
-                    newMaterial.mainTexture = students[studentIndex].albedoTexture;
-                    renderer.material = newMaterial;
+                    // Setze die Textur auf das Material
+                    headRenderer.material.mainTexture = studentTexture;
+                }
+                else
+                {
+                    // Wenn du ein Sprite hast, konvertiere es in eine Textur und wende es an
+                    headRenderer.material.mainTexture = studentData.studentImage.texture;
                 }
             }
-
-            studentIndex++;
+            else
+            {
+                Debug.LogError("Kein Renderer für den Kopf gefunden!");
+            }
         }
+        else
+        {
+            Debug.LogError("Kein 'Head' Objekt im Prefab gefunden!");
+        }
+
+        // Falls nötig, setze andere Daten, wie Augenfarbe oder AudioClip
+        // Beispiel: human.GetComponent<Renderer>().material.color = studentData.eyecolor;
     }
-
-
 }
